@@ -1,0 +1,50 @@
+クリーンコード
+リファクタリング
+Code Complete
+プログラミングPearls
+デザインパターン
+アジャイルソフトウェア開発の奥義
+新装版 リーダブルコード
+Clean Coder
+ソフトウェアアーキテクチャの基本
+プロフェッショナルJavaScript
+JavaScriptパターン
+テスト駆動開発
+リーン・ソフトウェア開発
+アンチパターン
+The Pragmatic Programmer
+Working Effectively with Legacy Code
+ソフトウェア開発の経済学
+エリック・エヴァンスのドメイン駆動設計
+Code Craft
+Clean Architecture
+Peopleware
+ユーザーストーリーマッピング
+エッセンシャル・ソフトウェア要求技術
+ユースケース実践入門
+ソフトウェア開発の環境学
+The Clean Coder
+Understanding Computation
+コーディングを支える技術
+リーンソフトウェア開発の原則パターン
+xUnitテスト入門
+The Mythical Man-Month
+アジャイル過ぎる勇気
+ファウンダーズ・ディレンマ
+エクストリームプログラミング勉強会
+ソフトウェア技術者のキャリアシフト
+アンチパターンクラウド編
+ソフトウェアレガシー
+オブジェクト指向設計実践ガイド
+リファクタリングパターン
+ドメイン特化言語
+Patterns of Enterprise Application Architecture
+ソフトウェアディベロップメントパターン
+オブジェクトデザイグンパターン
+パターン指向リファクタリング
+Beyond Software Architecture
+デザインパターン入門
+Concrete Mathematics
+The Art of Computer Programming
+Code Reading
+ユースケースベースドリファクタリング
